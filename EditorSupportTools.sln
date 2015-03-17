@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CUIToolHelper", "CUIToolHelper\CUIToolHelper\CUIToolHelper.csproj", "{8FF7F4C1-1C88-47AA-A2A5-6E811F868732}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExecutor", "FileExecutor\FileExecutor.csproj", "{0C65F3D9-791E-475C-8797-1FA4C0ABB177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExecutorTest", "FileExecutorTest\FileExecutorTest.csproj", "{7C016237-BAD2-4A0D-A447-FAC5B9E8E066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{8FF7F4C1-1C88-47AA-A2A5-6E811F868732}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF7F4C1-1C88-47AA-A2A5-6E811F868732}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF7F4C1-1C88-47AA-A2A5-6E811F868732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C65F3D9-791E-475C-8797-1FA4C0ABB177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C65F3D9-791E-475C-8797-1FA4C0ABB177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C65F3D9-791E-475C-8797-1FA4C0ABB177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C65F3D9-791E-475C-8797-1FA4C0ABB177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C016237-BAD2-4A0D-A447-FAC5B9E8E066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C016237-BAD2-4A0D-A447-FAC5B9E8E066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C016237-BAD2-4A0D-A447-FAC5B9E8E066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C016237-BAD2-4A0D-A447-FAC5B9E8E066}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
