@@ -37,6 +37,10 @@ namespace TakamiChie.FileExecutor
                     Console.Out.Write(stdout);
                     Console.Error.Write(stderr);
                 }
+                else
+                {
+                    Console.Error.WriteLine("FileExecutorが対応していないファイルタイプです。ファイルを実行できません。");
+                }
             }
             else
             {
