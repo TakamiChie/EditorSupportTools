@@ -24,7 +24,7 @@ namespace TakamiChie.FileExecutor
 
             var filename = result.ContainsKey("/file") ? result["/file"] : "";
             var filetype = result.ContainsKey("/type") ? result["/type"] : null;
-            var fileoptions = result.ContainsKey("/opt") ? filename + " " + result["/opt"] : filename;
+            var fileoptions = result.ContainsKey("/opt") ? result["/opt"] : "";
             
             if (File.Exists(filename))
             {
@@ -33,7 +33,7 @@ namespace TakamiChie.FileExecutor
                 {
                     string stdout;
                     string stderr;
-                    type.Execute(out stdout, out stderr, fileoptions, null);
+                    type.Execute(out stdout, out stderr, filename, fileoptions, null);
                     Console.Out.Write(stdout);
                     Console.Error.Write(stderr);
                 }

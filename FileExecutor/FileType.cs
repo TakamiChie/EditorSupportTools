@@ -20,6 +20,19 @@ namespace TakamiChie.FileExecutor
         /// <param name="args">引数</param>
         /// <param name="input">標準入力の文字列</param>
         /// <returns>実行コード</returns>
+        public virtual int Execute(out string stdout, out string stderr, string fileName, string args, string input)
+        {
+            return Execute(out stdout, out stderr, fileName + " " + args, input);
+        }
+
+        /// <summary>
+        /// ファイルを実行します。
+        /// </summary>
+        /// <param name="stdout">標準出力を格納する変数</param>
+        /// <param name="stderr">標準エラーを格納する変数</param>
+        /// <param name="args">引数</param>
+        /// <param name="input">標準入力の文字列</param>
+        /// <returns>実行コード</returns>
         public abstract int Execute(out string stdout, out string stderr, string args, string input);
     }
 
