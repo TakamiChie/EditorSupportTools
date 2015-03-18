@@ -40,10 +40,53 @@ namespace TakamiChie.FileExecutor.Test
         }
 
         /// <summary>
+        /// 定義済みファイルタイプをクラス名かつすべて小文字で指定した場合、期待したファイルタイプが出力される？
+        /// </summary>
+        [TestMethod]
+        public void IsExistFileTypeInClassNameToLower()
+        {
+            Assert.AreEqual(
+                typeof(Ruby),
+                Program.FindFileType("null.rb", "ruby").GetType());
+        }
+
+        /// <summary>
         /// 存在しないファイルタイプをクラス名で指定した場合、nullが出力される？
         /// </summary>
         [TestMethod]
         public void IsNonExistFileTypeInClassName()
+        {
+            Assert.IsNull(
+                Program.FindFileType("null.rb", "404"));
+        }
+
+        /// <summary>
+        /// 定義済みファイルタイプを別名で指定した場合、期待したファイルタイプが出力される？
+        /// </summary>
+        [TestMethod]
+        public void IsExistFileTypeInAlternateName()
+        {
+            Assert.AreEqual(
+                typeof(Javascript),
+                Program.FindFileType("null.rb", "JScript").GetType());
+        }
+
+        /// <summary>
+        /// 定義済みファイルタイプを別名かつすべて小文字で指定した場合、期待したファイルタイプが出力される？
+        /// </summary>
+        [TestMethod]
+        public void IsExistFileTypeInAlternateNameToLower()
+        {
+            Assert.AreEqual(
+                typeof(Javascript),
+                Program.FindFileType("null.rb", "jscript").GetType());
+        }
+
+        /// <summary>
+        /// 存在しないファイルタイプを別名で指定した場合、nullが出力される？
+        /// </summary>
+        [TestMethod]
+        public void IsNonExistFileTypeInAlternateName()
         {
             Assert.IsNull(
                 Program.FindFileType("null.rb", "404"));

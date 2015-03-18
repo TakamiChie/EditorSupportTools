@@ -69,4 +69,21 @@ namespace TakamiChie.FileExecutor
         /// <param name="extensions">拡張子(.から)</param>
         public DefaultFileExtAttribute(params string[] extensions) { this.Extensions = extensions; }
     }
+
+    /// <summary>
+    /// 別のファイルタイプ呼称を定義するための属性です。
+    /// </summary>
+    public class AlternateFileTypeAttribute : Attribute
+    {
+        /// <summary>
+        /// ファイルタイプ名のリスト
+        /// </summary>
+        public string[] Type;
+
+        /// <summary>
+        /// ファイルタイプの湖沼を指定します。
+        /// </summary>
+        /// <param name="type">ファイルタイプ名称</param>
+        public AlternateFileTypeAttribute(params string[] type) { this.Type = type; }
+    }
 }

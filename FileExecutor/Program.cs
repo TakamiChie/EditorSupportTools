@@ -60,28 +60,31 @@ namespace TakamiChie.FileExecutor
             string fileext = Path.GetExtension(filename);
             var asm = Assembly.GetExecutingAssembly();
             // 将来的にファイルタイプの検索方法を増やす可能性があるため、一律でSelect
-            var t = asm.GetTypes().Where(tp =>
-            {
-                var found = false;
-                if (filetype != null)
+            var t = asm.GetTypes().Where(tp => tp.Namespace == "TakamiChie.FileExecutor.Defines")
+                .Where(tp =>
                 {
-                    // ファイルタイプが指定されている＝ファイルタイプ名に合致するファイルタイプを探す
-                    if (tp.FullName == "TakamiChie.FileExecutor.Defines." + filetype)
+                    var found = false;
+                    if (filetype != null)
                     {
-                        found = true;
+                        // ファイルタイプが指定されている＝ファイルタイプ名に合致するファイルタイプを探す
+                        var attr = tp.GetCustomAttribute<AlternateFileTypeAttribute>();
+                        if ((tp.Name.ToLower() == filetype.ToLower()) ||
+                            (attr != null && attr.Type.Where(s => s.ToLower() == filetype.ToLower()).Count() > 0))
+                        {
+                            found = true;
+                        }
                     }
-                }
-                else
-                {
-                    // ファイルタイプが指定されていない＝拡張子を検索
-                    var attr = tp.GetCustomAttribute<DefaultFileExtAttribute>();
-                    if (attr != null && attr.Extensions.Contains(fileext))
+                    else
                     {
-                        found = true;
+                        // ファイルタイプが指定されていない＝拡張子を検索
+                        var attr = tp.GetCustomAttribute<DefaultFileExtAttribute>();
+                        if (attr != null && attr.Extensions.Contains(fileext))
+                        {
+                            found = true;
+                        }
                     }
-                }
-                return found;
-            });
+                    return found;
+                });
 
             var ret = t.FirstOrDefault();
             return ret == null ? null : Activator.CreateInstance(ret) as FileType;
