@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Defines\Javascript.cs" />
     <Compile Include="Defines\Python.cs" />
     <Compile Include="Defines\PHP.cs" />
     <Compile Include="Defines\Perl.cs" />
