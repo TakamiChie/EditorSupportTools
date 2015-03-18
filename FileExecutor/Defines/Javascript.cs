@@ -22,9 +22,19 @@ namespace TakamiChie.FileExecutor.Defines
         public override int Execute(out string stdout, out string stderr, string fileName, string args, string input)
         {
             var oldfn = fileName;
-            var newfn = Path.ChangeExtension(fileName, ".js");
-            if (File.Exists(newfn)) File.Delete(newfn);
-            File.Move(oldfn, newfn);
+            var newfn = "";
+            if (Path.GetExtension(oldfn) == ".tmp")
+            {
+                // 新規ファイル
+                newfn = Path.ChangeExtension(fileName, ".js");
+                if (File.Exists(newfn)) File.Delete(newfn);
+                File.Move(oldfn, newfn);
+            }
+            else
+            {
+                // ファイルを移動しない
+                newfn = '"' + oldfn + '"';
+            }
             return base.Execute(out stdout, out stderr, newfn, args, input);
         }
     }
