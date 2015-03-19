@@ -125,12 +125,21 @@ namespace TakamiChie.FileExecutor
                 pi.RedirectStandardOutput = true;
                 pi.RedirectStandardError = true;
                 // 実行
-                var proc = Process.Start(pi);
-                if (input != null) proc.StandardInput.Write(input);
-                proc.WaitForExit();
-                stdout = proc.StandardOutput.ReadToEnd();
-                stderr = proc.StandardError.ReadToEnd();
-                exitcode = proc.ExitCode;
+                try
+                {
+                    var proc = Process.Start(pi);
+                    if (input != null) proc.StandardInput.Write(input);
+                    proc.WaitForExit();
+                    stdout = proc.StandardOutput.ReadToEnd();
+                    stderr = proc.StandardError.ReadToEnd();
+                    exitcode = proc.ExitCode;
+                }
+                catch (Exception e)
+                {
+                    stdout = "";
+                    stderr = e.Message;
+                    exitcode = -1;
+                }
             }
             else
             {
