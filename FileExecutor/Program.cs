@@ -11,6 +11,7 @@ namespace TakamiChie.FileExecutor
 {
     public class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             /// コマンドラインオプション解析
