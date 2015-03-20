@@ -76,9 +76,11 @@ namespace TakamiChie.FileExecutor
             var r = executor;
             // 環境変数を探してファイルは存在するかどうかチェック
             var found = Environment.GetEnvironmentVariable("PATH").Split(';')
-                 .Any(p => File.Exists(Path.Combine(p, r)) ||
-                         Environment.GetEnvironmentVariable("PATHEXT").Split(';')
-                     .Any(x => File.Exists(Path.Combine(p, Path.ChangeExtension(r, x)))));
+                .Select(x => Path.Combine(x, r))
+                .SelectMany(_ => Environment.GetEnvironmentVariable("PATHEXT").Split(';')
+                    .Concat(new String[] { Path.GetExtension(r) }), 
+                        (p, ext) => Path.ChangeExtension(p, ext))
+                .Any(File.Exists);
             if (!found)
             {
                 // ファイルが存在しなかったので探す
