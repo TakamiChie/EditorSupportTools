@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Defines\Javascript.cs" />
+    <Compile Include="Defines\Lua.cs" />
     <Compile Include="Defines\UWSC.cs" />
     <Compile Include="Defines\Python.cs" />
     <Compile Include="Defines\PHP.cs" />
