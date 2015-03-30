@@ -16,6 +16,40 @@ namespace TakamiChie.FileExecutor
     /// </summary>
     public abstract class FileType
     {
+        [DllImport("KERNEL32.DLL")]
+        private static extern uint
+          GetPrivateProfileString(string lpAppName,
+          string lpKeyName, string lpDefault,
+          StringBuilder lpReturnedString, uint nSize,
+          string lpFileName);
+        [DllImport("KERNEL32.DLL")]
+        private static extern uint WritePrivateProfileString(
+          string lpAppName,
+          string lpKeyName,
+          string lpString,
+          string lpFileName);
+
+        private static string SETFILE = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.ini");
+
+        /// <summary>
+        /// 設定をファイルに書き込みます。
+        /// </summary>
+        /// <param name="section">設定のセクション</param>
+        /// <param name="key">設定キー</param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        protected string getSetting(string section, string key, string defaultValue)
+        {
+            StringBuilder sb = new StringBuilder(1024);
+            GetPrivateProfileString(section, key, defaultValue, sb, Convert.ToUInt32(sb.Capacity), SETFILE);
+            return sb.ToString();
+        }
+
+        protected void setSetting(string section, string key, string value)
+        {
+            WritePrivateProfileString(section, key, value, SETFILE);
+        }
+
         /// <summary>
         /// ファイルを実行します。
         /// </summary>
@@ -46,21 +80,6 @@ namespace TakamiChie.FileExecutor
     public abstract class BasicFileType: FileType
     {
 
-        [DllImport("KERNEL32.DLL")]
-        public static extern uint
-          GetPrivateProfileString(string lpAppName,
-          string lpKeyName, string lpDefault,
-          StringBuilder lpReturnedString, uint nSize,
-          string lpFileName);
-        [DllImport("KERNEL32.DLL")]
-        public static extern uint WritePrivateProfileString(
-          string lpAppName,
-          string lpKeyName,
-          string lpString,
-          string lpFileName);
-
-        protected static string SETFILE = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.ini");
-
         /// <summary>
         /// 実行アプリケーションのファイル名を取得します。
         /// </summary>
@@ -85,9 +104,7 @@ namespace TakamiChie.FileExecutor
             {
                 // ファイルが存在しなかったので探す
                 var typeName = this.GetType().Name;
-                StringBuilder sb = new StringBuilder(1024);
-                GetPrivateProfileString("PATH", typeName, "", sb, Convert.ToUInt32(sb.Capacity), SETFILE);
-                var fPath = sb.ToString();
+                var fPath = getSetting("PATH", typeName, "");
                 if (File.Exists(fPath))
                 {
                     // INIファイルに設定があったらそれを使う
@@ -102,7 +119,7 @@ namespace TakamiChie.FileExecutor
                     ofn.RestoreDirectory = true;
                     if (ofn.ShowDialog() == DialogResult.OK)
                     {
-                        WritePrivateProfileString("PATH", typeName, ofn.FileName, SETFILE);
+                        setSetting("PATH", typeName, ofn.FileName);
                         r = ofn.FileName;
                     }
                     else
