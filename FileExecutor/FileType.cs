@@ -153,20 +153,10 @@ namespace TakamiChie.FileExecutor
         /// </summary>
         protected abstract string executor { get; }
 
-        /// <summary>
-        /// 実行アプリケーションのファイル名を取得します。
-        /// もしファイルが発見できなかった場合、ファイルの選択ダイアログを表示します。
-        /// </summary>
-        /// <returns>ファイルパス</returns>
-        protected virtual string getExecutor()
-        {
-            return findExecutablePath("PATH", this.GetType().Name, executor);
-        }
-
         public override int Execute(out string stdout, out string stderr, string args, string input)
         {
             var exitcode = -1;
-            var exec = getExecutor();
+            var exec = findExecutablePath("PATH", this.GetType().Name, executor);
             if (exec != null)
             {
                 // 準備
