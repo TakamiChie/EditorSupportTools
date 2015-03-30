@@ -60,7 +60,7 @@ namespace TakamiChie.FileExecutor
         /// <returns>実行コード</returns>
         public virtual int Execute(out string stdout, out string stderr, string fileName, string args, string input)
         {
-            return Execute(out stdout, out stderr, fileName + " " + args, input);
+            return Execute(out stdout, out stderr, "\"" + fileName + "\" " + args, input);
         }
 
         /// <summary>
