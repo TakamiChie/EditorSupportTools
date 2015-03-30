@@ -139,6 +139,43 @@ namespace TakamiChie.FileExecutor
             WritePrivateProfileString(section, key, value, SETFILE);
         }
 
+        /// <summary>
+        /// 任意のプロセスを実行し、結果を返却します。
+        /// </summary>
+        /// <param name="stdout">標準出力が格納される文字列変数</param>
+        /// <param name="stderr">標準エラーが格納される文字列変数</param>
+        /// <param name="executable">実行ファイル</param>
+        /// <param name="args">引数</param>
+        /// <param name="input">標準入力</param>
+        /// <returns>終了コード</returns>
+        protected virtual int processExecute(out string stdout, out string stderr, string executable, string args, string input)
+        {
+            var exitcode = -1;
+            // 準備
+            var pi = new ProcessStartInfo(executable, args);
+            pi.UseShellExecute = false;
+            pi.RedirectStandardInput = true;
+            pi.RedirectStandardOutput = true;
+            pi.RedirectStandardError = true;
+            // 実行
+            try
+            {
+                var proc = Process.Start(pi);
+                if (input != null) proc.StandardInput.Write(input);
+                proc.WaitForExit();
+                stdout = proc.StandardOutput.ReadToEnd();
+                stderr = proc.StandardError.ReadToEnd();
+                exitcode = proc.ExitCode;
+            }
+            catch (Exception e)
+            {
+                stdout = "";
+                stderr = e.Message;
+                exitcode = -1;
+            }
+            return exitcode;
+        }
+
         #endregion
     }
 
@@ -159,28 +196,7 @@ namespace TakamiChie.FileExecutor
             var exec = findExecutablePath("PATH", this.GetType().Name, executor);
             if (exec != null)
             {
-                // 準備
-                var pi = new ProcessStartInfo(exec, args);
-                pi.UseShellExecute = false;
-                pi.RedirectStandardInput = true;
-                pi.RedirectStandardOutput = true;
-                pi.RedirectStandardError = true;
-                // 実行
-                try
-                {
-                    var proc = Process.Start(pi);
-                    if (input != null) proc.StandardInput.Write(input);
-                    proc.WaitForExit();
-                    stdout = proc.StandardOutput.ReadToEnd();
-                    stderr = proc.StandardError.ReadToEnd();
-                    exitcode = proc.ExitCode;
-                }
-                catch (Exception e)
-                {
-                    stdout = "";
-                    stderr = e.Message;
-                    exitcode = -1;
-                }
+                processExecute(out stdout, out stderr, exec, args, input);
             }
             else
             {
