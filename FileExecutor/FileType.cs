@@ -31,24 +31,7 @@ namespace TakamiChie.FileExecutor
 
         private static string SETFILE = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.ini");
 
-        /// <summary>
-        /// 設定をファイルに書き込みます。
-        /// </summary>
-        /// <param name="section">設定のセクション</param>
-        /// <param name="key">設定キー</param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        protected string getSetting(string section, string key, string defaultValue)
-        {
-            StringBuilder sb = new StringBuilder(1024);
-            GetPrivateProfileString(section, key, defaultValue, sb, Convert.ToUInt32(sb.Capacity), SETFILE);
-            return sb.ToString();
-        }
-
-        protected void setSetting(string section, string key, string value)
-        {
-            WritePrivateProfileString(section, key, value, SETFILE);
-        }
+        #region オーバーライド用メソッド
 
         /// <summary>
         /// ファイルを実行します。
@@ -72,35 +55,30 @@ namespace TakamiChie.FileExecutor
         /// <param name="input">標準入力の文字列</param>
         /// <returns>実行コード</returns>
         public abstract int Execute(out string stdout, out string stderr, string args, string input);
-    }
 
-    /// <summary>
-    /// 実行ファイルの名前を指定し直接実行するだけの、ごく基本的なファイルタイプの基本クラスです。
-    /// </summary>
-    public abstract class BasicFileType: FileType
-    {
+        #endregion
+
+        #region ユーティリティメソッド
 
         /// <summary>
-        /// 実行アプリケーションのファイル名を取得します。
+        /// 指定した実行ファイルを環境変数PATHに定義したパス内から検索し、見つかればそのパスを返します。
+        /// 見つからなかった場合、INIファイルに既にパスが記録されていればそれを、なければファイルを開くダイアログを表示して、その結果を返します。
         /// </summary>
-        protected abstract string executor { get; }
-
-        /// <summary>
-        /// 実行アプリケーションのファイル名を取得します。
-        /// もしファイルが発見できなかった場合、ファイルの選択ダイアログを表示します。
-        /// </summary>
-        /// <returns>ファイルパス</returns>
-        protected virtual string getExecutor()
+        /// <param name="iniSection">INIファイルのセクション</param>
+        /// <param name="iniKey">INIファイルのキー</param>
+        /// <param name="executableName">実行ファイルの名称</param>
+        /// <returns>実行ファイルのパス。ダイアログがキャンセルされたなどの要因により、ファイルパスが見つからなかった場合はnull</returns>
+        protected string findExecutablePath(string iniSection, string iniKey, string executableName)
         {
-            var r = executor;
+            var r = executableName;
             // 環境変数を探してファイルは存在するかどうかチェック
             var found = Environment.GetEnvironmentVariable("PATH").Split(';')
                 .Select(x => Path.Combine(x, r))
                 .SelectMany(_ => Environment.GetEnvironmentVariable("PATHEXT").Split(';')
-                    .Concat(new String[] { Path.GetExtension(r) }), 
+                    .Concat(new String[] { Path.GetExtension(r) }),
                         (p, ext) => Path.ChangeExtension(p, ext))
-                .Any(File.Exists);
-            if (!found)
+                .Where(File.Exists).FirstOrDefault();
+            if (found == null)
             {
                 // ファイルが存在しなかったので探す
                 var typeName = this.GetType().Name;
@@ -128,7 +106,61 @@ namespace TakamiChie.FileExecutor
                     }
                 }
             }
+            else
+            {
+                r = found;
+            }
             return r;
+
+        }
+
+        /// <summary>
+        /// 設定をファイルに書き込みます。
+        /// </summary>
+        /// <param name="section">設定のセクション</param>
+        /// <param name="key">設定キー</param>
+        /// <param name="defaultValue"デフォルト値></param>
+        /// <returns>読み込まれた値もしくは、デフォルト値</returns>
+        protected string getSetting(string section, string key, string defaultValue)
+        {
+            StringBuilder sb = new StringBuilder(1024);
+            GetPrivateProfileString(section, key, defaultValue, sb, Convert.ToUInt32(sb.Capacity), SETFILE);
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 設定をファイルから読み込みます
+        /// </summary>
+        /// <param name="section">設定のセクション</param>
+        /// <param name="key">設定キー</param>
+        /// <param name="value">設定する値</param>
+        protected void setSetting(string section, string key, string value)
+        {
+            WritePrivateProfileString(section, key, value, SETFILE);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 実行ファイルの名前を指定し直接実行するだけの、ごく基本的なファイルタイプの基本クラスです。
+    /// </summary>
+    public abstract class BasicFileType: FileType
+    {
+
+        /// <summary>
+        /// 実行アプリケーションのファイル名を取得します。
+        /// </summary>
+        protected abstract string executor { get; }
+
+        /// <summary>
+        /// 実行アプリケーションのファイル名を取得します。
+        /// もしファイルが発見できなかった場合、ファイルの選択ダイアログを表示します。
+        /// </summary>
+        /// <returns>ファイルパス</returns>
+        protected virtual string getExecutor()
+        {
+            return findExecutablePath("PATH", this.GetType().Name, executor);
         }
 
         public override int Execute(out string stdout, out string stderr, string args, string input)
