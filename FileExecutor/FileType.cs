@@ -181,17 +181,18 @@ namespace TakamiChie.FileExecutor
     {
 
         /// <summary>
-        /// 実行アプリケーションのファイル名を取得します。
+        /// 実行アプリケーションのファイル名を取得・設定します。
         /// </summary>
         protected abstract string executor { get; }
 
         public override int Execute(out string stdout, out string stderr, string args, string input)
         {
             var exitcode = -1;
-            var exec = findExecutablePath("PATH", this.GetType().Name, executor);
+            var exec = executor == null ? this.filename : findExecutablePath("PATH", this.GetType().Name, executor);
             if (exec != null)
             {
-                processExecute(out stdout, out stderr, exec, string.Format("\"{0}\" {1}", filename, args), input);
+                var argument = executor == null ? args : string.Format("\"{0}\" {1}", filename, args);
+                processExecute(out stdout, out stderr, exec, argument, input);
             }
             else
             {

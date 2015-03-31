@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 namespace TakamiChie.FileExecutor.Defines
 {
     [DefaultFileExt(".bat")]
-    class BAT : FileType
+    class BAT : BasicFileType
     {
+        protected override string executor
+        {
+            get { return null; }
+        }
         public override int Execute(out string stdout, out string stderr, string args, string input)
         {
             var oldfn = filename;
@@ -28,30 +32,7 @@ namespace TakamiChie.FileExecutor.Defines
                 newfn = '"' + oldfn + '"';
             }
 
-            var exitcode = -1;
-            // 準備
-            var pi = new ProcessStartInfo(newfn, args);
-            pi.UseShellExecute = false;
-            pi.RedirectStandardInput = true;
-            pi.RedirectStandardOutput = true;
-            pi.RedirectStandardError = true;
-            // 実行
-            try
-            {
-                var proc = Process.Start(pi);
-                if (input != null) proc.StandardInput.Write(input);
-                proc.WaitForExit();
-                stdout = proc.StandardOutput.ReadToEnd();
-                stderr = proc.StandardError.ReadToEnd();
-                exitcode = proc.ExitCode;
-            }
-            catch (Exception e)
-            {
-                stdout = "";
-                stderr = e.Message;
-                exitcode = -1;
-            }
-            return exitcode;
+            return base.Execute(out stdout, out stderr, args, input);
         }
     }
 }
