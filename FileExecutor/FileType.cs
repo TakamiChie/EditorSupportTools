@@ -30,21 +30,16 @@ namespace TakamiChie.FileExecutor
           string lpFileName);
 
         private static string SETFILE = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.ini");
+        protected string filename { get; set; }
+        protected string arguments { get; set; }
+
+        public void Init(string filename, string fileoptions)
+        {
+            this.filename = filename;
+            this.arguments = fileoptions;
+        }
 
         #region オーバーライド用メソッド
-
-        /// <summary>
-        /// ファイルを実行します。
-        /// </summary>
-        /// <param name="stdout">標準出力を格納する変数</param>
-        /// <param name="stderr">標準エラーを格納する変数</param>
-        /// <param name="args">引数</param>
-        /// <param name="input">標準入力の文字列</param>
-        /// <returns>実行コード</returns>
-        public virtual int Execute(out string stdout, out string stderr, string fileName, string args, string input)
-        {
-            return Execute(out stdout, out stderr, "\"" + fileName + "\" " + args, input);
-        }
 
         /// <summary>
         /// ファイルを実行します。
@@ -196,7 +191,7 @@ namespace TakamiChie.FileExecutor
             var exec = findExecutablePath("PATH", this.GetType().Name, executor);
             if (exec != null)
             {
-                processExecute(out stdout, out stderr, exec, args, input);
+                processExecute(out stdout, out stderr, exec, string.Format("\"{0}\" {1}", filename, args), input);
             }
             else
             {

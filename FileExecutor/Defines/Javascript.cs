@@ -19,14 +19,14 @@ namespace TakamiChie.FileExecutor.Defines
         /// <summary>
         /// 拡張子をtmp→jsに置き換える処理を追加します
         /// </summary>
-        public override int Execute(out string stdout, out string stderr, string fileName, string args, string input)
+        public override int Execute(out string stdout, out string stderr, string args, string input)
         {
-            var oldfn = fileName;
+            var oldfn = filename;
             var newfn = "";
             if (Path.GetExtension(oldfn) == ".tmp")
             {
                 // 新規ファイル
-                newfn = Path.ChangeExtension(fileName, ".js");
+                newfn = Path.ChangeExtension(filename, ".js");
                 if (File.Exists(newfn)) File.Delete(newfn);
                 File.Move(oldfn, newfn);
             }
@@ -35,7 +35,9 @@ namespace TakamiChie.FileExecutor.Defines
                 // ファイルを移動しない
                 newfn = '"' + oldfn + '"';
             }
-            return base.Execute(out stdout, out stderr, newfn, args, input);
+            this.filename = newfn;
+
+            return base.Execute(out stdout, out stderr, args, input);
         }
     }
 }

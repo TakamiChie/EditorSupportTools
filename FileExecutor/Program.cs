@@ -30,11 +30,12 @@ namespace TakamiChie.FileExecutor
             if (File.Exists(filename))
             {
                 var type = FindFileType(filename, filetype);
+                type.Init(filename, fileoptions);
                 if (type != null)
                 {
                     string stdout;
                     string stderr;
-                    type.Execute(out stdout, out stderr, filename, fileoptions, null);
+                    type.Execute(out stdout, out stderr, fileoptions, null);
                     Console.Out.Write(stdout);
                     Console.Error.Write(stderr);
                 }

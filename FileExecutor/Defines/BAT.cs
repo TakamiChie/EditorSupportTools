@@ -11,14 +11,14 @@ namespace TakamiChie.FileExecutor.Defines
     [DefaultFileExt(".bat")]
     class BAT : FileType
     {
-        public override int Execute(out string stdout, out string stderr, string fileName, string args, string input)
+        public override int Execute(out string stdout, out string stderr, string args, string input)
         {
-            var oldfn = fileName;
+            var oldfn = filename;
             var newfn = "";
             if (Path.GetExtension(oldfn) == ".tmp")
             {
                 // 新規ファイル
-                newfn = Path.ChangeExtension(fileName, ".bat");
+                newfn = Path.ChangeExtension(filename, ".bat");
                 if (File.Exists(newfn)) File.Delete(newfn);
                 File.Move(oldfn, newfn);
             }
@@ -52,11 +52,6 @@ namespace TakamiChie.FileExecutor.Defines
                 exitcode = -1;
             }
             return exitcode;
-        }
-
-        public override int Execute(out string stdout, out string stderr, string args, string input)
-        {
-            throw new NotImplementedException();
         }
     }
 }
