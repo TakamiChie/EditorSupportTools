@@ -77,7 +77,7 @@ namespace TakamiChie.FileExecutor
             {
                 // ファイルが存在しなかったので探す
                 var typeName = this.GetType().Name;
-                var fPath = getSetting("PATH", typeName, "");
+                var fPath = getSetting(iniSection, iniKey, "");
                 if (File.Exists(fPath))
                 {
                     // INIファイルに設定があったらそれを使う
@@ -92,7 +92,7 @@ namespace TakamiChie.FileExecutor
                     ofn.RestoreDirectory = true;
                     if (ofn.ShowDialog() == DialogResult.OK)
                     {
-                        setSetting("PATH", typeName, ofn.FileName);
+                        setSetting(iniSection, iniKey, ofn.FileName);
                         r = ofn.FileName;
                     }
                     else
