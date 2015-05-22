@@ -148,6 +148,7 @@ namespace TakamiChie.FileExecutor
             var exitcode = -1;
             // 準備
             var pi = new ProcessStartInfo(executable, args);
+            pi.CreateNoWindow = true;
             pi.UseShellExecute = false;
             pi.RedirectStandardInput = true;
             pi.RedirectStandardOutput = true;
