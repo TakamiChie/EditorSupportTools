@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Defines\CSharp.cs" />
     <Compile Include="Defines\Javascript.cs" />
     <Compile Include="Defines\BAT.cs" />
     <Compile Include="Defines\Lua.cs" />
