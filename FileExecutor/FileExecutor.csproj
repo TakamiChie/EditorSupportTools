@@ -51,6 +51,7 @@
     <Compile Include="Defines\Perl.cs" />
     <Compile Include="Defines\Ruby.cs" />
     <Compile Include="FileType.cs" />
+    <Compile Include="CompiledFileType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
