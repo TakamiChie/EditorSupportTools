@@ -33,7 +33,7 @@ namespace TakamiChie.FileExecutor.Defines
             else
             {
                 // ファイルを移動しない
-                newfn = '"' + oldfn + '"';
+                newfn = oldfn;
             }
             this.filename = newfn;
 
