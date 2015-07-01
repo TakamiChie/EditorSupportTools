@@ -1,15 +1,15 @@
 # EditorSupportTools
-ƒeƒLƒXƒgƒGƒfƒBƒ^‚Å‚Ì•¶Íì¬‚ðƒTƒ|[ƒg‚·‚éƒc[ƒ‹ŒQ
+ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ‡ã‚£ã‚¿ã§ã®æ–‡ç« ä½œæˆã‚’ã‚µãƒãƒ¼ãƒˆã™ã‚‹ãƒ„ãƒ¼ãƒ«ç¾¤
 
 ## GitExecutor
-ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ÅŽw’è‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ªGitƒŠƒ|ƒWƒgƒŠ‚Å‚ ‚Á‚½ê‡AƒRƒ~ƒbƒgƒ_ƒCƒAƒƒO‚ð•\Ž¦‚·‚éƒc[ƒ‹
+ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã§æŒ‡å®šã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒGitãƒªãƒã‚¸ãƒˆãƒªã§ã‚ã£ãŸå ´åˆã€ã‚³ãƒŸãƒƒãƒˆãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹ãƒ„ãƒ¼ãƒ«
 
 ## FileExecutor
-ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ÅŽw’è‚µ‚½ƒtƒ@ƒCƒ‹‚ðƒCƒ“ƒ^ƒvƒŠƒ^‚È‚ÇŠO•”ƒc[ƒ‹‚Å‚»‚Ì‚Ü‚ÜŽÀs‚·‚éƒc[ƒ‹(‘Î‰žƒtƒ@ƒCƒ‹‚Í‘±X‘‚â‚µ‚Ä‚¢‚«‚Ü‚·)
+ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã§æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¿ãƒ—ãƒªã‚¿ãªã©å¤–éƒ¨ãƒ„ãƒ¼ãƒ«ã§ãã®ã¾ã¾å®Ÿè¡Œã™ã‚‹ãƒ„ãƒ¼ãƒ«(å¯¾å¿œãƒ•ã‚¡ã‚¤ãƒ«ã¯ç¶šã€…å¢—ã‚„ã—ã¦ã„ãã¾ã™)
 
 ## CUIToolHelper
-ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ƒc[ƒ‹‚ðŽÀs‚µAŒ‹‰Êo—Í‚ðƒ_ƒCƒAƒƒO‚Å•\Ž¦‚·‚éƒwƒ‹ƒp[ƒc[ƒ‹
+ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ãƒ„ãƒ¼ãƒ«ã‚’å®Ÿè¡Œã—ã€çµæžœå‡ºåŠ›ã‚’ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã§è¡¨ç¤ºã™ã‚‹ãƒ˜ãƒ«ãƒ‘ãƒ¼ãƒ„ãƒ¼ãƒ«
 
 ## *Test
-‚»‚ê‚¼‚ê‚ÌƒeƒXƒg—pƒvƒƒWƒFƒNƒg
+ãã‚Œãžã‚Œã®ãƒ†ã‚¹ãƒˆç”¨ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ
 
